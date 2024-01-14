@@ -44,6 +44,14 @@
   display: none;
 }
 
+.cart-items-count {
+  padding: 2px 6px;
+  color: navajowhite;
+  margin-left: 3px;
+  border-radius: 50%;
+  background-color: rgb(2, 55, 55);
+}
+
 @media (min-width: 768px) {
   .logo-text {
     left: 30px;

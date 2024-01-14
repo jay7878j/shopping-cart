@@ -123,6 +123,8 @@ let cartListContainer = document.querySelector("#cartListContainer");
 let cartSummaryConatiner = document.querySelector("#cartSummaryConatiner");
 let cartEmptyTitle = document.querySelector("#cartEmptyTitle");
 let headerEl = document.querySelector("#header");
+let smNavLinkContainer = document.createElement("nav");
+let mdNavLinkContainer = document.createElement("nav");
 
 function addToCart(product) {
   const productObject = cartList.find(
@@ -144,6 +146,8 @@ function addToCart(product) {
   renderProducts(cartListContainer, cartList);
   renderFilter();
   renderCartSummary(cartListContainer, cartList);
+  renderSmallDeviceNavLinks();
+  renderlargeDeviceNavLinks();
 }
 
 function removeCartItem(product) {
@@ -151,6 +155,8 @@ function removeCartItem(product) {
   cartList = filterList;
   renderProducts(cartListContainer, cartList);
   renderCartSummary();
+  renderSmallDeviceNavLinks();
+  renderlargeDeviceNavLinks();
   //   console.log(cartList);
 }
 
@@ -354,6 +360,8 @@ function renderFilter() {
     cartList = [];
     renderProducts(cartListContainer, cartList);
     renderCartSummary();
+    renderSmallDeviceNavLinks();
+    renderlargeDeviceNavLinks();
     let emptyCartmsgEl = document.createElement("p");
     emptyCartmsgEl.classList.add("empty-cart-title");
     cartListContainer.appendChild(emptyCartmsgEl);
@@ -411,7 +419,7 @@ function renderCartSummary() {
 }
 
 function renderSmallDeviceNavLinks() {
-  let smNavLinkContainer = document.createElement("nav");
+  smNavLinkContainer.textContent = "";
   smNavLinkContainer.classList.add("sm-nav-links", "nav-links");
   headerEl.appendChild(smNavLinkContainer);
 
@@ -420,22 +428,45 @@ function renderSmallDeviceNavLinks() {
     smNavLinkEl.href = each.id;
     smNavLinkContainer.appendChild(smNavLinkEl);
 
-    let smNavLinkIcon = document.createElement("i");
-    smNavLinkIcon.classList.add(each.smNavLink, each.smNavLink2, "icon");
-    smNavLinkEl.appendChild(smNavLinkIcon);
+    if (each.id === "#cartSection") {
+      let smNavLinkIcon = document.createElement("i");
+      smNavLinkIcon.classList.add(each.smNavLink, each.smNavLink2, "icon");
+      smNavLinkEl.appendChild(smNavLinkIcon);
+
+      let smNavLinkSub = document.createElement("sub");
+      smNavLinkSub.textContent = cartList.length;
+      smNavLinkSub.classList.add("cart-items-count");
+      smNavLinkEl.appendChild(smNavLinkSub);
+    } else {
+      let smNavLinkIcon = document.createElement("i");
+      smNavLinkIcon.classList.add(each.smNavLink, each.smNavLink2, "icon");
+      smNavLinkEl.appendChild(smNavLinkIcon);
+    }
   });
 }
 
 function renderlargeDeviceNavLinks() {
-  let mdNavLinkContainer = document.createElement("nav");
+  mdNavLinkContainer.textContent = "";
   mdNavLinkContainer.classList.add("md-nav-links", "nav-links");
   headerEl.appendChild(mdNavLinkContainer);
 
   navLinks.forEach((each) => {
-    let mdNavLinkEl = document.createElement("a");
-    mdNavLinkEl.textContent = each.mdNavlink;
-    mdNavLinkEl.href = each.id;
-    mdNavLinkContainer.appendChild(mdNavLinkEl);
+    if (each.id === "#cartSection") {
+      let mdNavLinkEl = document.createElement("a");
+      mdNavLinkEl.textContent = each.mdNavlink;
+      mdNavLinkEl.href = each.id;
+      mdNavLinkContainer.appendChild(mdNavLinkEl);
+
+      let smNavLinkSub = document.createElement("sub");
+      smNavLinkSub.textContent = cartList.length;
+      smNavLinkSub.classList.add("cart-items-count");
+      mdNavLinkEl.appendChild(smNavLinkSub);
+    } else {
+      let mdNavLinkEl = document.createElement("a");
+      mdNavLinkEl.textContent = each.mdNavlink;
+      mdNavLinkEl.href = each.id;
+      mdNavLinkContainer.appendChild(mdNavLinkEl);
+    }
   });
 }
 
